@@ -1,0 +1,13 @@
+use std::thread;
+
+fn main() {
+    let handles: Vec<_> = (0..5).map(|i| {
+        thread::spawn(move || {
+            println!("Thread {} is running.", i);
+        })
+    }).collect();
+
+    for handle in handles {
+        handle.join().unwrap();
+    }
+}
