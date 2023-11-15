@@ -1,13 +1,25 @@
+// Import the `thread` module from the standard library.
 use std::thread;
 
+// Entry point of the Rust program.
 fn main() {
+    // Create a vector `handles` to store the thread handles.
+    // The `map` function is applied to a range from 0 to 4 (inclusive).
+    // For each number in the range, a new thread is spawned.
     let handles: Vec<_> = (0..5).map(|i| {
+        // Spawn a new thread.
+        // The `move` keyword is used to move the variable `i` into the thread's closure.
+        // Each thread prints a message indicating which thread is running.
         thread::spawn(move || {
             println!("Thread {} is running.", i);
         })
+    // Collect the results of the map into a vector of thread handles.
     }).collect();
 
+    // Iterate over each thread handle in the vector.
     for handle in handles {
+        // Wait for each thread to finish its execution.
+        // `unwrap` is used to handle any potential errors that might occur during join.
         handle.join().unwrap();
     }
 }
